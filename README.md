@@ -1,5 +1,5 @@
 # Webale-Chess-Game
-Working in progress
+Working in progress.
 
 ## Work Distribution
 ### - Movement
@@ -11,3 +11,4 @@ Working in progress
 
 ### - Save / Load / Restart Game
 ### - Condition to win
+### - MVC pattern
