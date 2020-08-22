@@ -1,12 +1,12 @@
 # Webale-Chess-Game
 Working in progress
 
-##Work Distribution
-###Movement
+## Work Distribution
+### Movement
 - Sun
 - Chevron
 - Triangle
 - Plus
 - Arrow (Jun Yang)
 
-###Save / Load / Restart Game
+### Save / Load / Restart Game
