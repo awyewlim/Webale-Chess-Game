@@ -9,6 +9,7 @@ public class WebaleGame{
     private static Piece queue = null;
     private static Slot temp = null;
     private static int playerTurn = 0;
+    private static boolean hasWinner;
     
     WebaleGame(){
         chessboard = new ChessBoard();
@@ -41,7 +42,7 @@ public class WebaleGame{
         }
     }
     
-    public void move(Slot slot){
+    public boolean move(Slot slot){
         // if clicked button has piece
         if(slot.getPiece() != null && movable(slot)){
             //if queue is empty
@@ -54,8 +55,10 @@ public class WebaleGame{
                 if(!queue.getPlayer().equals(slot.getPiece().getPlayer())){
                     temp.setPiece(null);
                     slot.setPiece(queue);
-                    chessboard.reverse();
+                    queue = null;
+                    temp = null;
                     playerTurn++;
+                    return true;
                 }
                 queue = null;
                 temp = null;
@@ -67,11 +70,13 @@ public class WebaleGame{
                 slot.setPiece(queue);
                 queue = null;
                 temp.setPiece(null);
-                chessboard.reverse();
+                temp = null;
                 playerTurn++;
+                return true;
             }
             temp = null;
         }
+        return false;
     }
     
     public boolean movable(Slot slot){
@@ -81,8 +86,34 @@ public class WebaleGame{
         return false;
     }
     
+    public String getWinner(){
+        int numOfSun = 0;
+        String winner = null;
+        for(int i = 0; i < chessboard.getBoardSize(); i++){
+            Slot slot = chessboard.getSlot(i);
+            Piece piece = slot.getPiece();
+            if(piece != null){
+                if(piece.getPieceName() == "Sun"){
+                    winner = piece.getPlayer().getColor();
+                    hasWinner = true;
+                    numOfSun++;
+                }
+            }
+        }
+        if(numOfSun == 2){
+            winner = null;
+            hasWinner = false;
+        }
+        return winner;        
+    }
+    
     public Player getPlayerTurn(){
-        return playerList.get(playerTurn%2);
+        if(hasWinner){
+            return playerList.get((playerTurn - 1) % 2);
+        }
+        else{
+            return playerList.get(playerTurn % 2);
+        }
     }
    
 }
