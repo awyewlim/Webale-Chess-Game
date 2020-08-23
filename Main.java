@@ -13,7 +13,7 @@ public class Main extends JFrame implements ActionListener{
     private static JPanel subPanel = new JPanel(new FlowLayout());
     private static JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     
-    private static JLabel msgLable = new JLabel("Game start! Red first.");
+    private static JLabel message = new JLabel("Game start! Red first.");
     
     private static ArrayList<JButton> buttons = new ArrayList<JButton>();
     
@@ -47,7 +47,7 @@ public class Main extends JFrame implements ActionListener{
         menuItemGame.add(menuItemRest);
         menuBar.add(menuItemGame);
         
-        subPanel.add(msgLable);
+        subPanel.add(message);
         topPanel.add(menuBar);
         this.setLayout(new BorderLayout());
         this.add(mainPanel, BorderLayout.CENTER);
@@ -118,8 +118,25 @@ public class Main extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         JButton button = (JButton)e.getSource();
         Slot slot = chessboard.getSlot(buttons.indexOf(button));
-        game.move(slot);
-        refresh();
+        boolean hasMoved = game.move(slot);
+        if(hasMoved){
+            String winner = game.getWinner();
+            if(winner != null){
+                message.setText(winner + " wins!");
+            }
+            else{
+                String team = game.getPlayerTurn().getColor();
+                if(team.equals("R")){
+                    message.setText("Red, It's your turn!");
+                }
+                else{
+                    message.setText("Blue, It's your turn!");
+                }
+                chessboard.reverse();
+            }
+            refresh();
+        }
+        
     }
     
     private Image loadImage(String path, boolean flip){
