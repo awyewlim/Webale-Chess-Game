@@ -13,7 +13,7 @@ public class Main extends JFrame implements ActionListener{
     private static JPanel subPanel = new JPanel(new FlowLayout());
     private static JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     
-    private static JLabel message = new JLabel("Game start! Red first.");
+    private static JLabel message = new JLabel("Game start! Team R first.");
     
     private static ArrayList<JButton> buttons = new ArrayList<JButton>();
     
@@ -107,12 +107,17 @@ public class Main extends JFrame implements ActionListener{
         }
     }    
     
-    public void refresh(){
+    public void refresh(boolean endgame){
         mainPanel.removeAll();
         buttons.clear();
         showBoard();
         revalidate();
         repaint();
+        if(endgame){
+            for(int i = 0; i < buttons.size(); i++){
+                buttons.get(i).removeActionListener(this);
+            }
+        }
     }
     
     public void actionPerformed(ActionEvent e){
@@ -122,19 +127,15 @@ public class Main extends JFrame implements ActionListener{
         if(hasMoved){
             String winner = game.getWinner();
             if(winner != null){
-                message.setText(winner + " wins!");
+                message.setText("Team " + winner + " wins!");
+                refresh(true);
             }
             else{
                 String team = game.getPlayerTurn().getColor();
-                if(team.equals("R")){
-                    message.setText("Red, It's your turn!");
-                }
-                else{
-                    message.setText("Blue, It's your turn!");
-                }
+                message.setText("Team " + team + ", it's your turn!");
                 chessboard.reverse();
+                refresh(false);
             }
-            refresh();
         }
         
     }
