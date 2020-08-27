@@ -9,24 +9,21 @@ import java.util.*;
 import java.io.*;
 
 public class Main extends JFrame implements ActionListener{
-    private static JPanel mainPanel = new JPanel(new GridLayout(8,7));
-    private static JPanel subPanel = new JPanel(new FlowLayout());
     private static JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    
-    private static JLabel message = new JLabel("Game start! Team R first.");
-    
-    private static ArrayList<JButton> buttons = new ArrayList<JButton>();
+    private static JPanel middlePanel = new JPanel(new GridLayout(8,7));
+    private static JPanel bottomPanel = new JPanel(new FlowLayout());
     
     private static JMenuBar menuBar = new JMenuBar();
-    private static JMenu menuItemGame = new JMenu("Webale");
+    private static JMenu menu = new JMenu("Webale");
     private static JMenuItem menuItemSave = new JMenuItem("Save Game");
     private static JMenuItem menuItemLoad = new JMenuItem("Load Game");
-    private static JMenuItem menuItemRest = new JMenuItem("Restart");
+    private static JMenuItem menuItemRestart = new JMenuItem("Restart");
     private static JFileChooser fileChooser = new JFileChooser();
     
+    private static ArrayList<JButton> buttons = new ArrayList<JButton>();
     private static WebaleGame game = new WebaleGame();
     private static ChessBoard chessboard = game.chessboard;
-    
+    private static JLabel message = new JLabel("Game start! Team R first.");
     
     Main(){
         super("Chess application");
@@ -36,23 +33,31 @@ public class Main extends JFrame implements ActionListener{
         
         setSize(550,700);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener( new WindowAdapter(){
+            public void windowClosing(WindowEvent e)
+            { 
+                String windowName = "Exit Application";
+                String windowInfo = "Do you want to exit Webale application?";
+                int result = JOptionPane.showConfirmDialog(middlePanel, windowInfo, windowName, JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION)
+                    setDefaultCloseOperation(EXIT_ON_CLOSE);
+            }
+        });
     }
-
     
     private void menuSetup(){
-        menuItemGame.add(menuItemSave);
-        menuItemGame.add(menuItemLoad);
-        menuItemGame.add(menuItemRest);
-        menuBar.add(menuItemGame);
-        
-        subPanel.add(message);
+        menu.add(menuItemSave);
+        menu.add(menuItemLoad);
+        menu.add(menuItemRestart);
+        menuBar.add(menu);    
         topPanel.add(menuBar);
+        bottomPanel.add(message);
+        
         this.setLayout(new BorderLayout());
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(subPanel, BorderLayout.SOUTH);
         this.add(topPanel, BorderLayout.NORTH);
+        this.add(middlePanel, BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
     }
     
     public void iconSetup(){
@@ -98,7 +103,7 @@ public class Main extends JFrame implements ActionListener{
         }
         btn.addActionListener(this);
         buttons.add(btn);
-        mainPanel.add(btn);
+        middlePanel.add(btn);
     }
     
     public void showBoard(){
@@ -108,7 +113,7 @@ public class Main extends JFrame implements ActionListener{
     }    
     
     public void refresh(boolean endgame){
-        mainPanel.removeAll();
+        middlePanel.removeAll();
         buttons.clear();
         showBoard();
         revalidate();
@@ -168,7 +173,6 @@ public class Main extends JFrame implements ActionListener{
     
         return dimg;
     }
-    
     
     public static void main(String[] args){
         new Main();
