@@ -19,6 +19,13 @@ public class WebaleGame{
         playerList.add(player1);
     }
     
+    public void restart(){
+        chessboard.clear();
+        pieceSetup();
+        playerTurn = 0;
+        hasWinner = false;
+    }
+    
     public void pieceSetup(){      
         String[] arrangement1 = {"Plus","Triangle","Chevron","Sun","Chevron","Triangle","Plus"};
         String arrangement2 = "Arrow";
