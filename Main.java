@@ -58,6 +58,14 @@ public class Main extends JFrame implements ActionListener{
         this.add(topPanel, BorderLayout.NORTH);
         this.add(middlePanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
+        
+        menuItemRestart.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                game.restart();
+                refresh(false);
+                message.setText("Game start! Team R first.");
+            }
+        });
     }
     
     public void iconSetup(){
