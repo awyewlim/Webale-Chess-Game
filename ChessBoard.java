@@ -19,6 +19,11 @@ public class ChessBoard{
         addChessSlot();
     }
     
+    public void clear(){
+        chessSlot.clear();
+        addChessSlot();
+    }
+    
     public void setBoardSize(int width, int height){
         this.width = width;
         this.height = height;
