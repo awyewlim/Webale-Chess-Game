@@ -10,7 +10,7 @@ public class WebaleGame{
     private static Slot temp = null;
     private static int playerTurn = 0;
     private static boolean hasWinner;
-    
+  
     WebaleGame(){
         chessboard = new ChessBoard();
         player1 = new Player("B");
