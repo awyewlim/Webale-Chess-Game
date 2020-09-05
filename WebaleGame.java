@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 
 public class WebaleGame{
     ChessBoard chessboard;
@@ -68,6 +69,9 @@ public class WebaleGame{
             //if queue is occupied
             else
             {
+                toX = slot.getX();
+                toY = slot.getY();
+                canMove = validMove(type,fromX,fromY,toX,toY);
                 if(!queue.getPlayer().equals(slot.getPiece().getPlayer()) && canMove)
                 {
                     temp.setPiece(null);
@@ -76,7 +80,6 @@ public class WebaleGame{
                     temp = null;
                     playerTurn++;
                     return true;
-
                 }
                 queue = null;
                 temp = null;
@@ -115,12 +118,12 @@ public class WebaleGame{
 
     public boolean validMove(String type, int fromX, int fromY, int toX, int toY)
     {
+        x = fromX - toX;
+        y = fromY - toY;
         if(type.equals("Arrow"))
         {
             if(fromY == toY)
             {
-                x = fromX - toX;
-                y = fromY - toY;
                 if(reachedEnd)
                 {
                    
@@ -133,9 +136,47 @@ public class WebaleGame{
                 }
             }
         }
-
-        else if (type.equals("Plus")){
+        else if(type.equals("Plus")){
             return true;
+        }
+        
+        
+        ////Doesn't work T_T/////
+        else if(type.equals("Triangle")){
+            if(x == y){
+                for(int i = 0; i < Math.abs(x); i++){
+                    if(toX < fromX){
+                        fromX = fromX - i;
+                    }
+                    else{
+                        fromX = fromX + i;
+                    }
+                    if(toY < fromY){
+                        fromY = fromY - i;
+                    }
+                    else{
+                        fromY = fromY + i;
+                    }
+                    
+                    if(chessboard.getSlot(fromX, fromY).getPiece() != null){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        ///////////////////////////
+        
+        
+        else if(type.equals("Chevron")){
+            if(((x == -2 || x == 2) && (y == 1 || y == -1)) || ((x == -1 || x == 1) && (y == -2 || y == 2))){
+                return true;
+            }
+        }
+        else if(type.equals("Sun")){
+            if((x == -1 || x == 0 || x == 1) && (y == -1 || y == 0 || y == 1)){
+                return true;
+            }
         }
         return false;
     }
