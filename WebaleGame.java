@@ -139,35 +139,51 @@ public class WebaleGame{
         else if(type.equals("Plus")){
             return true;
         }
-        
-        
-        ////Doesn't work T_T/////
+
         else if(type.equals("Triangle")){
-            if(x == y){
-                for(int i = 0; i < Math.abs(x); i++){
-                    if(toX < fromX){
-                        fromX = fromX - i;
+            // triangle only can move diagonally, so abs(x) always equals to abs(y)
+            if(Math.abs(x) == Math.abs(y)){
+                //obstruction checking
+                //upper left
+                if(toX < fromX && toY > fromY){
+                    for(int i = 1; i < x; i++){
+                        if(chessboard.getSlot(fromX-i, fromY+i).getPiece() != null) {
+                            return false;
+                        }
                     }
-                    else{
-                        fromX = fromX + i;
-                    }
-                    if(toY < fromY){
-                        fromY = fromY - i;
-                    }
-                    else{
-                        fromY = fromY + i;
-                    }
-                    
-                    if(chessboard.getSlot(fromX, fromY).getPiece() != null){
-                        return false;
-                    }
+                    return true;
                 }
-                return true;
+                // upper right
+                else if(toX > fromX && toY > fromY){
+                    for(int i = 1; i < x; i++){
+                        if(chessboard.getSlot(fromX+i, fromY+i).getPiece() != null) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                //lower left
+                else if(toX < fromX && toY < fromY){
+                    for(int i = 1; i < x; i++){
+                        if(chessboard.getSlot(fromX-i, fromY-i).getPiece() != null) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                //lower right
+                else if(toX > fromX && toY < fromY){
+                    for(int i = 1; i < x; i++){
+                        if(chessboard.getSlot(fromX+i, fromY-i).getPiece() != null) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             }
+            return false;
         }
-        ///////////////////////////
-        
-        
+
         else if(type.equals("Chevron")){
             if(((x == -2 || x == 2) && (y == 1 || y == -1)) || ((x == -1 || x == 1) && (y == -2 || y == 2))){
                 return true;
