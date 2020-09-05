@@ -143,6 +143,7 @@ public class WebaleGame{
         else if(type.equals("Triangle")){
             // triangle only can move diagonally, so abs(x) always equals to abs(y)
             if(Math.abs(x) == Math.abs(y)){
+                //obstruction checking
                 //upper left
                 if(toX < fromX && toY > fromY){
                     for(int i = 1; i <= x; i++){
