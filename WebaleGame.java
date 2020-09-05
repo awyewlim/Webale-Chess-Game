@@ -164,7 +164,7 @@ public class WebaleGame{
                 }
                 //lower left
                 else if(toX < fromX && toY < fromY){
-                    for(int i = 1; i <= x; i++){
+                    for(int i = 1; i < x; i++){
                         if(chessboard.getSlot(fromX-i, fromY-i).getPiece() != null) {
                             return false;
                         }
