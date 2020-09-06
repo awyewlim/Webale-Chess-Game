@@ -11,10 +11,10 @@ public class WebaleGame{
     private static Slot temp = null;
     private static int playerTurn = 0;
     private static boolean hasWinner;
-    private static boolean canMove = false, reachedEnd = false ;
+    private static boolean canMove = false;
     private static String type;
     private static  int fromX,fromY, toX, toY, x, y;
-    
+
     WebaleGame(){
         chessboard = new ChessBoard();
         player1 = new Player("B");
@@ -22,7 +22,7 @@ public class WebaleGame{
         playerList.add(player2);
         playerList.add(player1);
     }
-    
+
     public void restart(){
         chessboard.clear();
         pieceSetup();
@@ -33,21 +33,23 @@ public class WebaleGame{
     public void pieceSetup(){      
         String[] arrangement1 = {"Plus","Triangle","Chevron","Sun","Chevron","Triangle","Plus"};
         String arrangement2 = "Arrow";
+        boolean reachEnd = false;
+        boolean reachEnd2 = true;
         for(int i = 0; i < chessboard.getHeight(); i++){
             for(int j = 0; j < chessboard.getWidth(); j++){
                 if (i == 0){
-                    chessboard.addChessPiece(i, j, new Piece(arrangement1[j], player1));
+                    chessboard.addChessPiece(i, j, new Piece(arrangement1[j], player1,reachEnd2));
                 }
                 if (i == 1){
-                    chessboard.addChessPiece(i, j, new Piece(arrangement2, player1));
+                    chessboard.addChessPiece(i, j, new Piece(arrangement2, player1,reachEnd));
                     j++;
                 }
                 if (i == 6){
-                    chessboard.addChessPiece(i, j, new Piece(arrangement2, player2));
+                    chessboard.addChessPiece(i, j, new Piece(arrangement2, player2,reachEnd));
                     j++;
                 }
                 if (i == 7){
-                    chessboard.addChessPiece(i, j, new Piece(arrangement1[j], player2));
+                    chessboard.addChessPiece(i, j, new Piece(arrangement1[j], player2,reachEnd2));
                 }
             }
         }
@@ -71,7 +73,7 @@ public class WebaleGame{
             {
                 toX = slot.getX();
                 toY = slot.getY();
-                canMove = validMove(type,fromX,fromY,toX,toY);
+                canMove = validMove(type,fromX,fromY,toX,toY,queue);
                 if(!queue.getPlayer().equals(slot.getPiece().getPlayer()) && canMove)
                 {
                     temp.setPiece(null);
@@ -92,7 +94,8 @@ public class WebaleGame{
             {
                 toX = slot.getX();
                 toY = slot.getY();
-                canMove = validMove(type,fromX,fromY,toX,toY);
+
+                canMove = validMove(type,fromX,fromY,toX,toY,queue);
                 if(canMove)
                 {
                     slot.setPiece(queue);
@@ -116,17 +119,26 @@ public class WebaleGame{
         return false;
     }
 
-    public boolean validMove(String type, int fromX, int fromY, int toX, int toY)
+    public boolean validMove(String type, int fromX, int fromY, int toX, int toY,Piece queue)
     {
         x = fromX - toX;
         y = fromY - toY;
         if(type.equals("Arrow"))
         {
             if(fromY == toY)
-            {
-                if(reachedEnd)
+            {   
+                if(true)
                 {
-                   
+                    if(fromX == 0 )
+                        queue.setReachEnd(true);
+
+                    else if(fromX == 7)
+                        queue.setReachEnd(false);
+                }
+                if(queue.getReachEnd())
+                {
+                    if(x < 1) 
+                        return true;
                 }
                 else
                 {
@@ -136,8 +148,70 @@ public class WebaleGame{
                 }
             }
         }
-        else if(type.equals("Plus")){
-            return true;
+        else if (type.equals("Plus"))
+        { 
+            x = Math.abs(fromX - toX);
+            y = Math.abs(fromY - toY);
+            //move left or forward
+            if((fromX - toX) > 0 || (fromY - toY) > 0)
+            {
+                //move left
+                if((x == 0 && y >= 1))
+                {
+
+                    for(int i = 1; i <= y-1; i++)
+                    {
+                        if(chessboard.getSlot(fromX,fromY-i).getPiece() != null)
+                        {    
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                //move forward
+                else if(x >= 1 && y == 0)
+                {
+                    for(int i = 1; i <= x-1; i++)
+                    {
+                        if(chessboard.getSlot(fromX - i,fromY).getPiece() != null)
+                        {   
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+
+            //move right or backward
+            else if((fromX - toX) < 0 || (fromY - toY) < 0)
+            {
+                //move right
+                if(x == 0 && (fromY - toY) <= -1)
+                {
+                    for(int i = y-1 ; i > 0;  i--)
+                    {
+                        if(chessboard.getSlot(fromX, fromY + i).getPiece() != null)
+                        {    
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                //move backward
+                else if((fromX - toX) <= -1 && y == 0)
+                {
+                    for(int i = x-1 ; i > 0;  i--)
+                    {
+                        if(chessboard.getSlot(toX - i, toY).getPiece() != null)
+                        {    
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
         }
 
         else if(type.equals("Triangle")){
