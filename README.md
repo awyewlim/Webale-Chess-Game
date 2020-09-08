@@ -4,7 +4,7 @@ Webale chess is a special type of chess game with different rules and is played 
 <img src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/Chessboard.png?raw=true" width="450" height="600">
 
 ## Rules
-<img src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/SunR.png?raw=true" width="50" height="50">**Sun** - can only move one step in any direction. The game ends when the Sun is captured by the other side.
+<img align="left" src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/SunR.png?raw=true" width="50" height="50">**Sun** - can only move one step in any direction. The game ends when the Sun is captured by the other side.
 
 **Chevron** - moves in an L shape: 2 steps in one direction then 1 step perpendicular to it. (Similar to the Knight in the normal chess.) It is the only piece that can skip over the other pieces.
 
