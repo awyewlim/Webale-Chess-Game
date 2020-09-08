@@ -1,3 +1,4 @@
 # Webale-Chess-Game
 Working in progress.
-![](https://github.com/awyewlim/Webale-Chess-Game/Assets/Chessboard.png)
+![Test](https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/Chessboard.png?raw=true)
+<img src = "https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/Chessboard.png?raw=true">
