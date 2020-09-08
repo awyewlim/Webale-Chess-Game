@@ -9,7 +9,7 @@ public class WebaleGame{
 
     private static Piece queue = null;
     private static Slot temp = null;
-    private static int playerTurn = 0;
+    private static int playerTurnNum = 0;
     private static boolean hasWinner;
     private static boolean canMove = false;
     private static String type;
@@ -26,7 +26,7 @@ public class WebaleGame{
     public void restart(){
         chessboard.clear();
         pieceSetup();
-        playerTurn = 0;
+        playerTurnNum = 0;
         hasWinner = false;
     }
 
@@ -80,7 +80,7 @@ public class WebaleGame{
                     slot.setPiece(queue);
                     queue = null;
                     temp = null;
-                    playerTurn++;
+                    playerTurnNum++;
                     return true;
                 }
                 queue = null;
@@ -102,7 +102,7 @@ public class WebaleGame{
                     queue = null;
                     temp.setPiece(null);
                     temp = null;
-                    playerTurn++;
+                    playerTurnNum++;
                     return true;
                 }
             }
@@ -127,22 +127,21 @@ public class WebaleGame{
         {
             if(fromY == toY)
             {   
-                if(true)
-                {
-                    if(fromX == 0 )
-                        queue.setReachEnd(true);
-
-                    else if(fromX == 7)
-                        queue.setReachEnd(false);
-                }
                 if(queue.getReachEnd())
                 {
-                    if(x < 1) 
+                    if(x == -1 || (x == -2 && chessboard.getSlot(fromX + 1,fromY).getPiece() == null)){ 
+                        if(toX == 7){
+                            queue.setReachEnd(false);
+                        }    
                         return true;
+                    }
                 }
                 else
                 {
                     if(x == 1 || (x == 2 && chessboard.getSlot(fromX - 1,fromY).getPiece() == null)){
+                        if(toX == 0){
+                            queue.setReachEnd(true);
+                        }
                         return true;
                     }
                 }
@@ -270,7 +269,22 @@ public class WebaleGame{
         }
         return false;
     }
-
+    
+    public void changeState(){
+        for(int i = 0; i < chessboard.getBoardSize(); i++){
+            if(chessboard.getSlot(i).getPiece() != null){
+                if(chessboard.getSlot(i).getPiece().getPieceName().equals("Triangle")){
+                    chessboard.getSlot(i).getPiece().setPieceName("Plus");
+                    continue;
+                }
+                else if(chessboard.getSlot(i).getPiece().getPieceName().equals("Plus")){
+                    chessboard.getSlot(i).getPiece().setPieceName("Triangle");
+                    continue;
+                }
+            }
+        }
+    }
+    
     public String getWinner(){
         int numOfSun = 0;
         String winner = null;
@@ -294,11 +308,15 @@ public class WebaleGame{
 
     public Player getPlayerTurn(){
         if(hasWinner){
-            return playerList.get((playerTurn - 1) % 2);
+            return playerList.get((playerTurnNum - 1) % 2);
         }
         else{
-            return playerList.get(playerTurn % 2);
+            return playerList.get(playerTurnNum % 2);
         }
+    }
+    
+    public int getPlayerTurnNum(){
+        return playerTurnNum;
     }
 
 }
