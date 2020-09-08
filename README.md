@@ -1,7 +1,7 @@
 # Webale-Chess-Game
 Webale chess is a special type of chess game with different rules and is played on a 7x8 board. It is made as a GUI-based Java Application based on the requirement of university assignment.
+
 ![](https://media.giphy.com/media/gdYl8fqwIW3N76cKjg/giphy.gif)
-<img src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/Chessboard.png?raw=true" width="450" height="600">
 
 ## Rules
 <img align="left" src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/SunR.png?raw=true" width="25" height="25">**Sun** - can only move one step in any direction. The game ends when the Sun is captured by the other side.
