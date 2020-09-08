@@ -23,7 +23,7 @@ Webale chess is a special type of chess game with different rules and is played 
 ```
   cd YOURFILEPATH
 ```
-3. Compile and run `Main.java` with the following commands:
+3. Compile and run `Main.java` with the following commands
 ```
   javac Main.java
   java Main
