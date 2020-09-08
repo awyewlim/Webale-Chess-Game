@@ -13,3 +13,5 @@ Webale chess is a special type of chess game with different rules and is played 
 **Plus** - can move any number of steps up and down, or left and right.
 
 **Arrow** - can only move 1 or 2 steps forward each time, but when it reaches the other edge of the board, it turns around and heads back in the opposite direction.
+
+After blue has moved 2 times, all the blue Triangles will turn into Pluses and vice versa. Similarly, after red has moved 2 times, all the red Triangles will turn into Plusses and vice versa. Then they will change again after the 4th move, 6th move, etc. This makes Webale chess different from normal chess games, because the pieces will transform like that.
