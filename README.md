@@ -1,6 +1,6 @@
 # Webale-Chess-Game
 Webale chess is a special type of chess game with different rules and is played on a 7x8 board. It is made as a GUI-based Java Application based on the requirement of university assignment.
-
+![](https://media.giphy.com/media/gdYl8fqwIW3N76cKjg/giphy.gif)
 <img src="https://github.com/awyewlim/Webale-Chess-Game/blob/master/Assets/Chessboard.png?raw=true" width="450" height="600">
 
 ## Rules
