@@ -94,7 +94,7 @@ public class Main extends JFrame implements ActionListener{
         Image icon;
         if(piece != null){
             if(piece.getPlayer().equals(game.getPlayerTurn())){
-                if(piece.getReachEnd()){
+                if(piece.getPieceName().equals("Arrow") && piece.getReachEnd()){
                     icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), true);
                 }
                 else{
@@ -102,7 +102,7 @@ public class Main extends JFrame implements ActionListener{
                 }
             }
             else{
-                if(piece.getReachEnd()){
+                if(piece.getPieceName().equals("Arrow") && piece.getReachEnd()){
                     icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), false);
                 }
                 else{
