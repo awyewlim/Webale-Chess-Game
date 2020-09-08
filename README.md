@@ -12,4 +12,4 @@ Webale chess is a special type of chess game with different rules and is played 
 
 **Plus** - can move any number of steps up and down, or left and right.
 
-**Arrow** - can only move 1 or 2 steps forward each time, but when it reaches the other edge of the board, it turns around and heads back in the opposite direction. (The icon should also turn around when that happens.)
+**Arrow** - can only move 1 or 2 steps forward each time, but when it reaches the other edge of the board, it turns around and heads back in the opposite direction.
