@@ -66,6 +66,37 @@ public class Main extends JFrame implements ActionListener{
                 message.setText("Game start! Team R first.");
             }
         });
+
+        menuItemSave.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to save game?");
+                if(reply == JOptionPane.YES_OPTION){
+                    try{
+                        game.save();
+                    }
+                    catch(Exception ex){
+                        JOptionPane.showMessageDialog(null, "Fail to save! Please try again...");
+                    }
+                }
+            }
+        });
+
+        menuItemLoad.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                int reply = JOptionPane.showConfirmDialog(null, "Do you want to load previous game?");
+                if(reply == JOptionPane.YES_OPTION){
+                    try{
+                        game.load();
+                        JOptionPane.showMessageDialog(null, "Previous saved game loaded successfully!");
+                        refresh(false);
+                    }
+                    catch(Exception ex){
+                        JOptionPane.showMessageDialog(null, "Game failed to load! Please try again...");
+                    }
+                }
+            }
+        });
+    
     }
     
     public void iconSetup(){
