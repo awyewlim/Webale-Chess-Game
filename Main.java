@@ -122,14 +122,23 @@ public class Main extends JFrame implements ActionListener{
     public void buttonSetup(int i){
         Slot slot = chessboard.getSlot(i);
         Piece piece = slot.getPiece();
-        
         Image icon;
         if(piece != null){
             if(piece.getPlayer().equals(game.getPlayerTurn())){
-                icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), false);
+                if(piece.getPieceName().equals("Arrow") && piece.getReachEnd()){
+                    icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), true);
+                }
+                else{
+                    icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), false);
+                }
             }
             else{
-                icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), true);
+                if(piece.getPieceName().equals("Arrow") && piece.getReachEnd()){
+                    icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), false);
+                }
+                else{
+                    icon = loadImage(chessboard.getIcon(piece.getPieceName() + piece.getPlayer().getColor()), true);
+                }
             }
         }
         else{
@@ -177,6 +186,9 @@ public class Main extends JFrame implements ActionListener{
             else{
                 String team = game.getPlayerTurn().getColor();
                 message.setText("Team " + team + ", it's your turn!");
+                if(game.getPlayerTurnNum() % 4 == 0){
+                    game.changeState();
+                }
                 chessboard.reverse();
                 refresh(false);
             }
