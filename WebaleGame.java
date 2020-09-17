@@ -1,4 +1,10 @@
 import java.util.*;
+import java.util.regex.Pattern;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.*;
 
 public class WebaleGame{
@@ -30,6 +36,50 @@ public class WebaleGame{
         hasWinner = false;
     }
 
+    public void save() throws IOException{
+        File file = new File("gameData.txt");
+        PrintWriter printWriter = new PrintWriter(file);
+        String currentPlayer = getPlayerTurn().getColor();
+        if(currentPlayer.equals("R")){
+            currentPlayer = "Red";
+        }
+        else{
+            currentPlayer = "Blue";
+        }
+
+        for(int i = 1; i <= 56; i++){
+            if(chessboard.getSlot(i-1).getPiece() == null){
+                printWriter.print("null ");
+            }
+            else{
+                printWriter.print(chessboard.getSlot(i-1).getPiece().getPlayer().getColor() +
+                                    chessboard.getSlot(i-1).getPiece().getPieceName() + " ");
+            }
+            if(i > 0 && i % 7 == 0){
+               printWriter.print("\n");
+            }
+        }
+        printWriter.println("Current total of turns:" + playerTurn);
+        printWriter.println("Current Player's turn:" + currentPlayer);
+        printWriter.close();
+    }
+
+    public void load() throws FileNotFoundException{
+        File file = new File("gameData.txt");
+        Scanner scan = new Scanner(file);
+        chessboard.clear();
+        for(int i = 0; i < chessboard.getHeight(); i++){
+            for(int j = 0; j < chessboard.getWidth(); j++){
+                pieceSetup(i, j, scan.next());
+            }
+        }
+        scan.nextLine();
+        scan.skip("Current total of turns:");
+        playerTurn = Integer.parseInt(scan.next());
+        System.err.println(playerTurn);
+        scan.close();
+    }
+
     public void pieceSetup(){      
         String[] arrangement1 = {"Plus","Triangle","Chevron","Sun","Chevron","Triangle","Plus"};
         String arrangement2 = "Arrow";
@@ -51,6 +101,15 @@ public class WebaleGame{
                 }
             }
         }
+    }
+
+    public void pieceSetup(int x, int y, String pieceName){
+        if(pieceName.charAt(0) == 'B'){
+            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player1));
+        }
+        if(pieceName.charAt(0) == 'R'){
+            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player2));
+        }            
     }
 
     public boolean move(Slot slot){
@@ -201,8 +260,8 @@ public class WebaleGame{
         int numOfSun = 0;
         String winner = null;
         for(int i = 0; i < chessboard.getBoardSize(); i++){
-            Slot slot = chessboard.getSlot(i);
-            Piece piece = slot.getPiece();
+             Slot slot = chessboard.getSlot(i);
+             Piece piece = slot.getPiece();
             if(piece != null){
                 if(piece.getPieceName() == "Sun"){
                     winner = piece.getPlayer().getColor();
@@ -223,6 +282,7 @@ public class WebaleGame{
             return playerList.get((playerTurn - 1) % 2);
         }
         else{
+            System.err.println("Player turn: " + playerTurn);
             return playerList.get(playerTurn % 2);
         }
     }
