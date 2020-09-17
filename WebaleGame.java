@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.regex.Pattern;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
@@ -76,7 +75,6 @@ public class WebaleGame{
         scan.nextLine();
         scan.skip("Current total of turns:");
         playerTurn = Integer.parseInt(scan.next());
-        System.err.println(playerTurn);
         scan.close();
     }
 
