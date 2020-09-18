@@ -51,14 +51,20 @@ public class WebaleGame{
                 printWriter.print("null ");
             }
             else{
-                printWriter.print(chessboard.getSlot(i-1).getPiece().getPlayer().getColor() +
-                                    chessboard.getSlot(i-1).getPiece().getPieceName() + " ");
+                if(chessboard.getSlot(i-1).getPiece().getPieceName().equals("Arrow") && chessboard.getSlot(i-1).getPiece().getReachEnd()){
+                    printWriter.print(chessboard.getSlot(i-1).getPiece().getPlayer().getColor() +
+                    chessboard.getSlot(i-1).getPiece().getPieceName() + "ReachEnd ");
+                }
+                else{
+                    printWriter.print(chessboard.getSlot(i-1).getPiece().getPlayer().getColor() +
+                                        chessboard.getSlot(i-1).getPiece().getPieceName() + " ");
+                }
             }
             if(i > 0 && i % 7 == 0){
                printWriter.print("\n");
             }
         }
-        printWriter.println("Current total of turns:" + playerTurnNum);
+        printWriter.println("Current total of turns:" + getPlayerTurnNum());
         printWriter.println("Current Player's turn:" + currentPlayer);
         printWriter.close();
     }
@@ -74,7 +80,7 @@ public class WebaleGame{
         }
         scan.nextLine();
         scan.skip("Current total of turns:");
-        playerTurnNum = Integer.parseInt(scan.next());
+        setPLayerTurnNum(Integer.parseInt(scan.next()));
         scan.close();
     }
 
@@ -104,11 +110,16 @@ public class WebaleGame{
     }
 
     public void pieceSetup(int x, int y, String pieceName){
+        boolean reachEnd = false;
+        if(pieceName.contains("ReachEnd")){
+            pieceName = pieceName.substring(0, pieceName.length()-8);
+            reachEnd = true;
+        }
         if(pieceName.charAt(0) == 'B'){
-            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player1));
+            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player1, reachEnd));
         }
         if(pieceName.charAt(0) == 'R'){
-            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player2));
+            chessboard.addChessPiece(x, y, new Piece(pieceName.substring(1), player2, reachEnd));
         }            
     }
 
@@ -176,7 +187,7 @@ public class WebaleGame{
         return false;
     }
 
-    public boolean validMove(String type, int fromX, int fromY, int toX, int toY,Piece queue)
+    public boolean validMove(String type, int fromX, int fromY, int toX, int toY, Piece queue)
     {
         x = fromX - toX;
         y = fromY - toY;
@@ -376,4 +387,7 @@ public class WebaleGame{
         return playerTurnNum;
     }
 
+    public void setPLayerTurnNum(int playerTurnNum){
+        this.playerTurnNum = playerTurnNum;
+    }
 }
